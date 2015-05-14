@@ -1,0 +1,11 @@
+{
+  "name": "gulp-tasks",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "swagger-js-codegen": "^1.1.2",
+    "yamljs": "^0.2.2"
+  }
+}
