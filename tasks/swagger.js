@@ -23,7 +23,11 @@ gulp.task('swagger', function () {
                 var swagger = YAML.parse(fs.readFileSync(file, 'UTF-8'));
             }
 
-            var angularjsSourceCode = CodeGen.getAngularCode({ className: name, swagger: swagger });
+            var angularjsSourceCode = CodeGen.getAngularCode({
+                moduleName: config.swagger.moduleName,
+                className: name,
+                swagger: swagger
+            });
             fs.writeFileSync(path.resolve(dest, name + '.js'), angularjsSourceCode);
         }
     }

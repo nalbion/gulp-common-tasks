@@ -16,6 +16,7 @@ The swagger task will do nothing unless you provide an array of schemas:
 ```javascript
 module.exports = {
     swagger: {
+        moduleName: 'app',
         dest: '.tmp/',
         schemas: [
             { 'MyApi': 'node_modules/api-package/swagger.yaml' }
