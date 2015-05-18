@@ -1,4 +1,5 @@
-require('./tasks/swagger');
+//require('./tasks/swagger');
+try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
 
 // Adds the tasks defined within this package to the gulp object provided
 module.exports = function(gulp) {

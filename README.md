@@ -1,3 +1,11 @@
+# Installation
+
+```
+sudo npm install -g typescript
+sudo npm link typescript
+```
+
+
 You `gulpfile.js` can be as simple as:
 
 ```javascript
