@@ -1,9 +1,9 @@
 {
   "name": "gulp-tasks",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "main": "index.js",
-  "files": ["tasks/*.js"],
+  "files": ["index.js", "tasks/*.js"],
   "dependencies": {
     "browser-sync": "^2.7.1",
     "del": "^1.1.1",
