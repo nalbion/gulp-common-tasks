@@ -8,7 +8,7 @@ var argv = require('yargs').argv,
     merge = require('merge2'),
     require_merge = require('./_require-merge.js');
 
-var Config = require_merge('_config.js'),
+var config = require_merge('_config.js'),
     tsProject = require_merge('_tsProject.js'),
     systemjsConfig = require_merge('_systemjsConfig.js');
 
@@ -18,14 +18,14 @@ gulp.task('scripts', ['typescript'], function () {
         var Builder = require('systemjs-builder');
         var builder = new Builder(systemjsConfig);
 
-        //builder.build('main/**/* - angular2/angular2', Config.paths.dest + '/js/myModule.js');
+        //builder.build('main/**/* - angular2/angular2', config.paths.dest + '/js/myModule.js');
 
         Promise.all([builder.trace('main - extras'), //  - angular2/angular2
             builder.trace('extras')])
             .then(function (trees) {
                 return Promise.all([
-                    builder.buildTree(trees[0], Config.paths.dest + '/js/main.js'),
-                    builder.buildTree(trees[1], Config.paths.dest + '/js/extras.js')
+                    builder.buildTree(trees[0], config.paths.dest + '/js/main.js'),
+                    builder.buildTree(trees[1], config.paths.dest + '/js/extras.js')
                 ]);
             });
     }
@@ -44,26 +44,33 @@ gulp.task('scripts:requirejs', ['typescript:dev'], function() {
     return gulp.src(['.tmp/js/main.js',
         '.tmp/js/extras.js'])
         .pipe(requirejsOptimize(require('./_requirejsOptimize')))
-        .pipe(gulp.dest(Config.paths.dest));
+        .pipe(gulp.dest(config.paths.dest));
 });
 
 gulp.task('typescript:dev', function () {
-    var tsResult = gulp.src([
-        'bower_components/angular2-now/angular2-now.ts',
-        'app/scripts/**/*.ts'
-    ])
-        .pipe(sourcemaps.init())
-        .pipe(ts(tsProject, {}, ts.reporter.longReporter()));
+    //var tsResult = gulp.src('app/**/*.ts')
+    //    .pipe(ts({
+    //        typescript: require('typescript'),
+    //        noImplicitAny: true,
+    //        out: 'output.js'
+    //    }));
+    //return tsResult.js.pipe(gulp.dest('.tmp'));
+
+    var tsResult = gulp.src(config.typescript.src)
+        //.pipe(sourcemaps.init())
+        .pipe(ts(tsProject)); //, {}, ts.reporter.longReporter()));
 
     return merge(
         tsResult.js
-            .pipe(ts.filter(tsProject, { referencedFrom: ['main.ts'] }))
+            //.pipe(ts.filter(tsProject, { referencedFrom: ['main.ts'] }))
             //.pipe(concat('main.js'))
             //.pipe(replace(/'scripts\/_/, '\'js/'))
-            .pipe(replace(/..\/..\/bower_components\//, ''))
+            .pipe(replace(/(\.\.\/)*(bower_components\/)?/g, ''))
+            //// 'bower-my-jobjs/my-jobs/MyJobs'
+            .pipe(replace(/'[-\w\/]*\/app\/components\//g, '\''))
             //.pipe(amdOptimize(requirejsConfig))
             //.pipe(concat('main.js'))
-            .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
+            //.pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
             .pipe(gulp.dest('.tmp/js'))
         //tsResult.js
         //    .pipe(ts.filter(tsProject, { referencedFrom: ['extras.ts'] }))

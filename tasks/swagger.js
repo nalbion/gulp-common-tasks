@@ -2,14 +2,16 @@
 
 var gulp = require('gulp');
 var path = require('path');
-var config = require(path.resolve('./tasks/_config'));
+var require_merge = require('./_require-merge.js');
+
+var config = require_merge('_config.js');
 
 gulp.task('swagger', function () {
     if (config && config.swagger) {
         var fs = require('fs');
 
         var CodeGen = require('swagger-js-codegen').CodeGen;
-        var dest = config.swagger.dest || '.tmp/';
+        var dest = config.swagger.dest || '.tmp/js';
 
         for (var i = 0; i < config.swagger.schemas.length; i++) {
             var schema = config.swagger.schemas[i],

@@ -15,12 +15,13 @@ gulp.task('serve', ['styles'], function () {
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
         // https: true,
-        server: ['.tmp', 'app']
+        server: ['.tmp', 'bower_components', 'node_modules', 'app']
     });
 
     gulp.watch(['app/**/*.html'], reload);
     gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-    gulp.watch(['app/scripts/**/*.js'], ['jshint']);
+    gulp.watch(['app/components/**/*.ts'], ['scripts', reload]);
+    gulp.watch(['app/components/**/*.js'], ['jshint']);
     gulp.watch(['app/images/**/*'], reload);
 });
 
