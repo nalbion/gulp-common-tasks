@@ -1,5 +1,5 @@
 {
-  "name": "gulp-tasks",
+  "name": "gulp-common-tasks",
   "version": "0.0.4",
   "private": true,
   "main": "index.js",

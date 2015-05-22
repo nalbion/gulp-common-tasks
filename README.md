@@ -10,7 +10,7 @@ You `gulpfile.js` can be as simple as:
 
 ```javascript
 var gulp = require('gulp');
-require('gulp-tasks')(gulp);
+require('gulp-common-tasks')(gulp);
 ```
 
 You can add or over-ride your project-specific tasks after calling the two lines above.

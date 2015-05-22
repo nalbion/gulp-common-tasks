@@ -67,7 +67,7 @@ gulp.task('typescript:dev', function () {
             //.pipe(replace(/'scripts\/_/, '\'js/'))
             .pipe(replace(/(\.\.\/)*(bower_components\/)?/g, ''))
             //// 'bower-my-jobjs/my-jobs/MyJobs'
-            .pipe(replace(/'[-\w\/]*\/app\/components\//g, '\''))
+            .pipe(replace(/'[-\w\/]*\/app\/components\//g, '\'js/'))
             //.pipe(amdOptimize(requirejsConfig))
             //.pipe(concat('main.js'))
             //.pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))

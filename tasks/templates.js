@@ -9,9 +9,7 @@ var config = require_merge('_config.js');
 
 gulp.task('templates', function () {
     gulp.src(config.templates.src)
-        .pipe(templateCache({
-            //moduleSystem: 'RequireJS'
-        }))
+        .pipe(templateCache(config.templates.options))
         .pipe(concat('templates.js'))
         .pipe(gulp.dest(config.paths.dest + '/js'));
 });
