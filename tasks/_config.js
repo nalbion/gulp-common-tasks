@@ -7,11 +7,13 @@ var config = {
     },
     typescript: {
         src: [
+            'app/app*.ts',
             'app/components/**/*.ts'
         ]
     },
     templates: {
         src: [
+            'app/app.html',
             'app/components/**/*.html'
         ],
         options: {

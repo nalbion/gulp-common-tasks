@@ -20,11 +20,11 @@ gulp.task('scripts', ['typescript'], function () {
 
         //builder.build('main/**/* - angular2/angular2', config.paths.dest + '/js/myModule.js');
 
-        Promise.all([builder.trace('main - extras'), //  - angular2/angular2
+        Promise.all([builder.trace('app - extras'), //  - angular2/angular2
             builder.trace('extras')])
             .then(function (trees) {
                 return Promise.all([
-                    builder.buildTree(trees[0], config.paths.dest + '/js/main.js'),
+                    builder.buildTree(trees[0], config.paths.dest + '/js/app.js'),
                     builder.buildTree(trees[1], config.paths.dest + '/js/extras.js')
                 ]);
             });
@@ -41,7 +41,7 @@ gulp.task('typescript', function () {
 });
 
 gulp.task('scripts:requirejs', ['typescript:dev'], function() {
-    return gulp.src(['.tmp/js/main.js',
+    return gulp.src(['.tmp/js/app.js',
         '.tmp/js/extras.js'])
         .pipe(requirejsOptimize(require('./_requirejsOptimize')))
         .pipe(gulp.dest(config.paths.dest));
