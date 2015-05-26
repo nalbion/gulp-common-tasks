@@ -26,7 +26,7 @@ gulp.task('swagger', function () {
             }
 
             var angularjsSourceCode = CodeGen.getAngularCode({
-                moduleName: config.swagger.moduleName,
+                moduleName: schema.moduleName || config.swagger.moduleName,
                 className: name,
                 swagger: swagger
             });

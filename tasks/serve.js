@@ -18,10 +18,10 @@ gulp.task('serve', ['styles'], function () {
         server: ['.tmp', 'bower_components', 'node_modules', 'app']
     });
 
-    gulp.watch(['app/**/*.html'], reload);
-    gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-    gulp.watch(['app/components/**/*.ts'], ['scripts', reload]);
-    gulp.watch(['app/components/**/*.js'], ['jshint']);
+    gulp.watch(['app/**/*.html'], ['templates'], reload);
+    gulp.watch(['app/**/*.{scss,css}'], ['styles', reload]);
+    gulp.watch(['app/**/*.ts'], ['scripts', reload]);
+    gulp.watch(['app/**/*.js'], ['jshint']);
     gulp.watch(['app/images/**/*'], reload);
 });
 
