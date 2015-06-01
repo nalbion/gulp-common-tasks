@@ -65,7 +65,7 @@ gulp.task('typescript:dev', function () {
             //.pipe(ts.filter(tsProject, { referencedFrom: ['main.ts'] }))
             //.pipe(concat('main.js'))
             //.pipe(replace(/'scripts\/_/, '\'js/'))
-            .pipe(replace(/(\.\.\/)*(bower_components\/)?/g, ''))
+            .pipe(replace(/(\.\.\/)*(bower_components\/)/g, ''))
             //// 'bower-my-jobjs/my-jobs/MyJobs'
             .pipe(replace(/'[-\w\/]*\/app\//g, '\'js/'))
             //.pipe(amdOptimize(requirejsConfig))
