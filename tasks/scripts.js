@@ -55,7 +55,6 @@ gulp.task('typescript:dev', function () {
     //        out: 'output.js'
     //    }));
     //return tsResult.js.pipe(gulp.dest('.tmp'));
-
     var tsResult = gulp.src(config.typescript.src)
         //.pipe(sourcemaps.init())
         .pipe(ts(tsProject)); //, {}, ts.reporter.longReporter()));
@@ -71,14 +70,14 @@ gulp.task('typescript:dev', function () {
             //.pipe(amdOptimize(requirejsConfig))
             //.pipe(concat('main.js'))
             //.pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
-            .pipe(gulp.dest('.tmp/js'))
+            .pipe(gulp.dest('.tmp/js')),
         //tsResult.js
         //    .pipe(ts.filter(tsProject, { referencedFrom: ['extras.ts'] }))
         //    //.pipe(amdOptimize(requirejsConfig))
         //    //.pipe(concat('extras.js'))
         //    .pipe(sourcemaps.write())
         //    .pipe(gulp.dest('.tmp/js')),
-        //tsResult.dts.pipe(gulp.dest('.tmp/declarations'))
+        tsResult.dts.pipe(gulp.dest('.tmp/declarations'))
     );
 });
 
