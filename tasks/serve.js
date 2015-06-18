@@ -27,16 +27,18 @@ gulp.task('serve', ['styles', 'styles:elements', 'images'], function () {
         // https: true,
         server: {
             baseDir: [
+                '.',
                 '.tmp',
-                //'bower_components', 'node_modules',
+                'bower_components', 'node_modules',
                 'app'],
             routes: {
                 '/bower_components': 'bower_components'
             },
             middleware: [
                 function (req, res, next) {
-                    if (req.url.match(/^\/api\//)) {
-                        var reqPath = req.url;
+                    var match = req.url.match(/^(\/api\/[^\?]+)(\?.*)?/);
+                    if (match) {
+                        var reqPath = match[1];
                         reqPath = path.resolve('app/mock-server') + reqPath;
                         if (fs.existsSync(reqPath + '.js')) {
                             res.end(require(reqPath + '.js')(req, res));

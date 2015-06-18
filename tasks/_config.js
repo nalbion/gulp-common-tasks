@@ -15,6 +15,7 @@ var config = {
     },
     styles: {
         src: [
+            'app/styles/**/*.sass',
             'app/styles/**/*.scss',
             'app/styles/**/*.css'
         ],

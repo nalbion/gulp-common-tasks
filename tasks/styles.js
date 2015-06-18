@@ -18,6 +18,15 @@ var AUTOPREFIXER_BROWSERS = [
     'bb >= 10'
 ];
 
+gulp.task('styles', function () {
+    return styleTask('styles', config.styles.src);
+});
+
+gulp.task('styles:elements', function () {
+    return styleTask('elements', config.styles.elements);
+});
+
+
 var styleTask = function (stylesPath, srcs) {
     return gulp.src(srcs)
         .pipe($.sourcemaps.init())
@@ -33,11 +42,30 @@ var styleTask = function (stylesPath, srcs) {
         .pipe(gulp.dest('dist/' + stylesPath))
         .pipe($.size({title: stylesPath}));
 };
-
-gulp.task('styles', function () {
-    return styleTask('styles', config.styles.src);
-});
-
-gulp.task('styles:elements', function () {
-    return styleTask('elements', config.styles.elements);
-});
+//
+///** Copied from LESS */
+//var lighten = function(color, amount, method) {
+//    var hsl = color.toHSL();
+//
+//    if (typeof method !== "undefined" && method.value === "relative") {
+//        hsl.l +=  hsl.l * amount.value / 100;
+//    }
+//    else {
+//        hsl.l += amount.value / 100;
+//    }
+//    hsl.l = clamp(hsl.l);
+//    return hsla(hsl);
+//};
+//
+//var darken = function (color, amount, method) {
+//    var hsl = color.toHSL();
+//
+//    if (typeof method !== "undefined" && method.value === "relative") {
+//        hsl.l -=  hsl.l * amount.value / 100;
+//    }
+//    else {
+//        hsl.l -= amount.value / 100;
+//    }
+//    hsl.l = clamp(hsl.l);
+//    return hsla(hsl);
+//};
