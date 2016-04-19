@@ -5,19 +5,18 @@ var $ = require('gulp-load-plugins')();
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
-    var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+    var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
 
-    return gulp.src('app/**/*.html')
+    return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
+        // Replace path for vulcanized assets
+        .pipe($.if('*.html', $.replace('elements/elements.html', 'elements/elements.vulcanized.html')))
         .pipe(assets)
         // Concatenate and minify JavaScript
         .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
         // Remove any unused CSS
-        // Note: if not using the Style Guide, you can delete it from
-        //       the next line to only include styles your project uses.
         .pipe($.if('*.css', $.uncss({
             html: [
-                'app/index.html',
-                'app/styleguide.html'
+                'app/index.html'
             ],
             // CSS Selectors for UnCSS to ignore
             ignore: [
@@ -33,7 +32,11 @@ gulp.task('html', function () {
         // Update production Style Guide paths
         .pipe($.replace('components/components.css', 'components/main.min.css'))
         // Minify any HTML
-        .pipe($.if('*.html', $.minifyHtml()))
+        .pipe($.if('*.html', $.minifyHtml({
+            quotes: true,
+            empty: true,
+            spare: true
+        })))
         // Output files
         .pipe(gulp.dest('dist'))
         .pipe($.size({title: 'html'}));
