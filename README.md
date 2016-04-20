@@ -1,5 +1,11 @@
 # gulp-common-tasks
 **Re-usable, customisable default gulp tasks.**
+
+For a full, up-to-date list of tasks provided for your project run:
+
+   gulp help --tasks
+
+The main tasks you may be interested in are:
  
 - `clean`
 - `copy` - Copy all files at the root level (app)

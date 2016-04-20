@@ -6,7 +6,11 @@ var argv = require('yargs').argv,
     sourcemaps = require('gulp-sourcemaps'),
     concat = require('gulp-concat'),
     merge = require('merge2'),
+    addStream     = require('add-stream'),
+    templateCache = require('gulp-angular-templatecache'),
+    _             = require('underscore'),
     require_merge = require('./_require-merge.js');
+
 
 var config = require_merge('_config.js'),
     tsProject = require_merge('_tsProject.js'),
@@ -47,7 +51,13 @@ gulp.task('scripts:requirejs', ['typescript:dev'], function() {
         .pipe(gulp.dest(config.paths.dest));
 });
 
+config.typescript.src = [
+    'app/*.ts',
+    'app/{components,views}/**/*.ts'
+];
+
 gulp.task('typescript:dev', function () {
+console.info('config.typescript.src:', config.typescript.src);
     //var tsResult = gulp.src('app/**/*.ts')
     //    .pipe(ts({
     //        typescript: require('typescript'),
@@ -56,7 +66,8 @@ gulp.task('typescript:dev', function () {
     //    }));
     //return tsResult.js.pipe(gulp.dest('.tmp'));
     var tsResult = gulp.src(config.typescript.src)
-        //.pipe(sourcemaps.init())
+        .pipe(addStream.obj(prepareTemplates()))
+        .pipe(sourcemaps.init())
         .pipe(ts(tsProject)); //, {}, ts.reporter.longReporter()));
 
     return merge(
@@ -64,13 +75,13 @@ gulp.task('typescript:dev', function () {
             //.pipe(ts.filter(tsProject, { referencedFrom: ['main.ts'] }))
             //.pipe(concat('main.js'))
             //.pipe(replace(/'scripts\/_/, '\'js/'))
-            .pipe(replace(/(\.\.\/)*(bower_components\/)/g, ''))
+//            .pipe(replace(/(\.\.\/)*(bower_components\/)/g, ''))
             //// 'bower-my-jobjs/my-jobs/MyJobs'
-            .pipe(replace(/'[-\w\/]*\/app\//g, '\'js/'))
+//            .pipe(replace(/'[-\w\/]*\/app\//g, '\'js/'))
             //.pipe(amdOptimize(requirejsConfig))
             //.pipe(concat('main.js'))
             //.pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
-            .pipe(gulp.dest('.tmp/js')),
+            .pipe(gulp.dest(config.typescript.dest)),
         //tsResult.js
         //    .pipe(ts.filter(tsProject, { referencedFrom: ['extras.ts'] }))
         //    //.pipe(amdOptimize(requirejsConfig))
@@ -81,3 +92,15 @@ gulp.task('typescript:dev', function () {
     );
 });
 
+function prepareTemplates() {
+    // we get a conflict with the < % = var % > syntax for $templateCache
+    // template header, so we'll just encode values to keep yo happy
+    var encodedHeader = "angular.module(&quot;&lt;%= module %&gt;&quot;&lt;%= standalone %&gt;).run([&quot;$templateCache&quot;, function($templateCache:any) {";
+    return gulp.src('app/components/!**!/!*.html')
+        .pipe(templateCache('templates.ts', {
+            root: "app-templates",
+            module: "app.templates",
+            standalone : true,
+            templateHeader: _.unescape(encodedHeader)
+        }));
+}

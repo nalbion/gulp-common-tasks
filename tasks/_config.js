@@ -15,6 +15,9 @@ var config = {
     },
     styles: {
         src: [
+            'app/app.scss',
+            'app/components/**/*.scss',
+            'app/layout/**/*.scss',
             'app/styles/**/*.sass',
             'app/styles/**/*.scss',
             'app/styles/**/*.css'
@@ -28,7 +31,8 @@ var config = {
         src: [
             'app/app*.ts',
             'app/components/**/*.ts'
-        ]
+        ], 
+        dest: '.tmp/js'
     },
     ngTemplates: {
         src: [

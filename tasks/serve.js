@@ -30,7 +30,9 @@ gulp.task('serve', ['styles', 'styles:elements', 'images'], function () {
                 '.',
                 '.tmp',
                 'bower_components', 'node_modules',
-                'app'],
+                'app',
+                'dist'
+                ],
             routes: {
                 '/bower_components': 'bower_components'
             },
