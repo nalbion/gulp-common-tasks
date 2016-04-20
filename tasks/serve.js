@@ -18,7 +18,7 @@ var mockProxy = httpProxy.createProxyServer({
 
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles', 'styles:elements', 'images'], function () {
+gulp.task('serve', config.serve.dependencies, function () {
     browserSync({
         notify: false,
         // Run as an https by uncommenting 'https: true'

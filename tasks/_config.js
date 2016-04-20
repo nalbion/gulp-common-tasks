@@ -2,9 +2,12 @@
 var argv = require('yargs').argv;
 
 var config = {
+    serve: {
+        dependencies: ['styles', 'styles:elements', 'images']
+    },
     watch: [
         {glob: ['app/**/*.html'], tasks: ['ng-templates'], reload: true},
-        {glob: ['app/styles/**/*.{scss,css}'], tasks: ['styles'], reload: true},
+        {glob: ['app/app.scss', 'app/{components,views,styles}/**/*.{scss,css}'], tasks: ['styles'], reload: true},
         {glob: ['app/elements/**/*.{scss,css}'], tasks: ['styles:elements'], reload: true},
         {glob: ['app/**/*.ts'], tasks: ['scripts'], reload: true},
         {glob: ['app/**/*.js'], tasks: ['jshint'], reload: true},

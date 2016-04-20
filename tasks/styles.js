@@ -54,10 +54,10 @@ var styleTask = function (stylesPath, srcs) {
         //.pipe($.changed('.tmp/styles', {extension: '.css'}))
         .pipe($.sass({
             precision: 10,
-            onError: console.error.bind(console, 'Sass error:')
-        })/*.on('error', sass.logError)*/)
+            //onError: console.error.bind(console, 'Sass error:')
+        }).on('error', $.sass.logError))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-        .pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write({sourceRoot: '.'}))
         .pipe(gulp.dest('.tmp/' + stylesPath))
         .pipe($.if('*.css', $.csso()))
         .pipe(gulp.dest('dist/' + stylesPath))
