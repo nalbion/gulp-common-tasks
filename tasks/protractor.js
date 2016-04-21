@@ -17,7 +17,7 @@ gulp.task('protractor:cucumber', function(callback) {
         .on('end', callback);
 });
 
-gulp.task('protractor:report', function() {
+gulp.task('protractor:report', ['protractor:cucumber'], function() {
     gulp.src('reports/cucumber.json')
         .pipe(gulpProtractorCucumberHtmlReport())
         .pipe(gulp.dest('reports'));
