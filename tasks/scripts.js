@@ -7,6 +7,7 @@ var argv = require('yargs').argv,
     concat = require('gulp-concat'),
     merge = require('merge2'),
     addStream     = require('add-stream'),
+    tslint        = require('gulp-tslint'),
     templateCache = require('gulp-angular-templatecache'),
     _             = require('underscore'),
     require_merge = require('./_require-merge.js');
@@ -16,6 +17,11 @@ var config = require_merge('_config.js'),
     tsProject = require_merge('_tsProject.js'),
     systemjsConfig = require_merge('_systemjsConfig.js');
 
+gulp.task('lint', function() {
+    return gulp.src(config.typescript.src)
+        .pipe(tslint())
+        .pipe(tslint.report('default'));
+});
 
 gulp.task('scripts', ['typescript'], function () {
     if (argv.production) {
