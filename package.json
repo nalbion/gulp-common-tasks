@@ -1,6 +1,6 @@
 {
   "name": "gulp-common-tasks",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "private": true,
   "main": "index.js",
   "files": [
