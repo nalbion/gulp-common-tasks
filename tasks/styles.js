@@ -18,7 +18,7 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 gulp.task('styles', 'Processes SASS files', function () {
-    return styleTask('styles', config.styles.src);
+    return styleTask('', config.styles.src);
 });
 
 gulp.task('styles:elements', 'Processes SASS files in app/elements', function () {

@@ -85,15 +85,17 @@ gulp.task('typescript:unit-test', ['typescript:elements','typescript:dev'], func
 gulp.task('typescript:elements',
     'Transpiles ' + config.typescript.elements.src + ' to ' + config.typescript.elements.dest,
     function () {
-    return typescriptTask(config.typescript.elements);
-});
+        return typescriptTask(config.typescript.elements);
+    }
+);
 
 gulp.task('typescript:wct',
     'Transpiles ' + config.typescript.wct.src + ' to ' + config.typescript.wct.dest,
     function () {
-    var _ = require('underscore');
-    return typescriptTask(_.extend(config.typescript.wct));
-});
+        var _ = require('underscore');
+        return typescriptTask(_.extend(config.typescript.wct));
+    }
+);
 
 var typescriptTask = function(config) {
     var require_merge = require('./_require-merge.js');
@@ -102,7 +104,7 @@ var typescriptTask = function(config) {
     var merge = require('merge2');
     var _ = require('underscore');
 
-//console.info(config);
+console.info(config);
     var mergedTsProject = _.extend({}, tsProject, config.tsProject);
     //if (mergedTsProject.out) {
     //    delete mergedTsProject.module;
@@ -137,15 +139,13 @@ gulp.task('typescript:features',
 });
 
 
-gulp.task('typescript:dev', 'Transpiles with sourcemap support', function () {
+gulp.task('typescript:dev', 'Transpiles with sourcemap support to ' + config.typescript.dest, function () {
     var sourcemaps = require('gulp-sourcemaps');
     var addStream     = require('add-stream');
     var merge = require('merge2');
     var ts = require('gulp-typescript');
     var require_merge = require('./_require-merge.js');
     var tsProject = require_merge('_tsProject.js');
-
-
     //concat = require('gulp-concat')
 
     //var tsResult = gulp.src('app/**/*.ts')

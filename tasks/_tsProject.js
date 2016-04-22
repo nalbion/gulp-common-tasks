@@ -1,6 +1,6 @@
 module.exports = {
 //    typescript: require('typescript'),
-//    sortOutput: true,
+    sortOutput: true,
     declarationFiles: true,
     //noExternalResolve: true,
     experimentalDecorators: true,

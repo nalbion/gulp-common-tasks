@@ -43,7 +43,7 @@ var config = {
             src: 'test/integration/*.js'
         },
         wct: {
-            src: ['test/elements']
+            src: ['test/elements/**/*']
         }
     },
     typescript: {
@@ -68,7 +68,7 @@ var config = {
             ],
             dest: '.tmp/wct',
             //tsProject: {module: 'commonjs'}
-            tsProject: {out: 'typescript-wct.js'}
+            // tsProject: {out: 'typescript-wct.js'}
         }
     },
     ngTemplates: {

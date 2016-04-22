@@ -22,7 +22,7 @@ gulp.task('test:style', 'Runs all .js files through jshint', function() {
 
 gulp.task('test:unit', 'Runs mocha tests in ' + config.test.unit.src, function() {
     var mocha = require('gulp-mocha');
-    return gulp.src(config.test.src, {read: false})
+    return gulp.src(config.test.unit.src, {read: false})
         .pipe(mocha({reporter: 'spec'}));
 });
 
@@ -45,7 +45,7 @@ gulp.task('test:elements',
         return function(error) {
             if (error) {
                 // Pretty error for gulp.
-                error = new Error(chalk.red(error.message || error));
+                error = new Error(require('chalk').red(error.message || error));
                 error.showStack = false;
             }
             done(error);
@@ -75,6 +75,7 @@ gulp.task('test:elements',
         //    // than the project's components.
         //    {'/components': path.join(WCT_ROOT, 'bower_components')},
         //]),
+        //curl 'http://localhost:2000/components/app/test/elements/job-search/job-search-api-tests.js'
         webserver: {
             pathMappings: [
                 {'/components': '../bower_components'},
