@@ -10,4 +10,16 @@ module.exports = function(gulp) {
             task = tasks[key];
         gulp.task(key, task.dep, task.fn);
     }
+
+    gulp.task('default', function() {
+        console.info('=================================================================');
+        console.info('                        gulp-common-tasks                        ');
+        console.info('=================================================================');
+        console.info('Most of the tasks & config for this project have been defined by');
+        console.info('     https://github.com/nalbion/gulp-common-tasks');
+        console.info('For more info run:');
+        console.info('    gulp --tasks');
+        console.info('    less node_modules/gulp-common-tasks/README.md');
+        return require('gulp-task-listing').withFilters(null, 'default')();
+    });
 };
