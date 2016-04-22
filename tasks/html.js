@@ -5,14 +5,18 @@ var $ = require('gulp-load-plugins')();
 var minifyHtml = require('gulp-htmlmin');
 var minifyCss = require('gulp-clean-css');
 
+var version = require(require('path').resolve('package.json')).version;
+var build = process.env.BUILD || 'dev';
+
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
     // var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
 
     return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
         // Replace path for vulcanized assets (for Polymer projects)
-        .pipe($.if('*.html', $.replace('elements/elements.html', 'elements/elements.vulcanized.html')))
-
+        .pipe($.replace('elements/elements.html', 'elements/elements.vulcanized.html'))
+        .pipe($.replace(/\{\{VERSION\}\}/g, version))
+        .pipe($.replace(/\{\{BUILD\}\}/g, build))
         .pipe($.usemin({
             css: [ $.rev() ],
             html: [ function() {
@@ -29,11 +33,6 @@ gulp.task('html', function () {
             inlinejs: [ $.uglify ],
             inlinecss: [ minifyCss, 'concat' ]
         }))
-        // .pipe(minifyHtml({
-        //     removeComments: true,
-        //     preserveLineBreaks: true,
-        //     collapseWhitespace: true
-        // }))
 
         // .pipe(assets)
         // // Concatenate and minify JavaScript
