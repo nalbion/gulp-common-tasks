@@ -35,7 +35,9 @@ gulp.task('test:integration', 'Runs mocha tests in ' + config.test.integration.s
 
 //wct.gulp.init(gulp, []);  // provides `gulp wtc, test:local (wct:local), test:remote (wct:sauce)`
 // wct.test, wct.config, wct.steps, wtc.test
-gulp.task('test:elements', '<Polymer> runs WCT tests in ' + config.test.wct.src, ['typescript:unit-test'], function(done) {
+gulp.task('test:elements',
+    '<Polymer> runs WCT tests in ' + config.test.wct.src,
+    ['typescript:unit-test', 'typescript:wct'], function(done) {
     //async.series([]);
     var wct = require('web-component-tester');
 

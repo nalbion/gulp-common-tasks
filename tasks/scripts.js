@@ -98,6 +98,7 @@ gulp.task('typescript:wct',
 var typescriptTask = function(config) {
     var require_merge = require('./_require-merge.js');
     var tsProject = require_merge('_tsProject.js');
+    var ts = require('gulp-typescript');
     var merge = require('merge2');
     var _ = require('underscore');
 
@@ -139,6 +140,11 @@ gulp.task('typescript:features',
 gulp.task('typescript:dev', 'Transpiles with sourcemap support', function () {
     var sourcemaps = require('gulp-sourcemaps');
     var addStream     = require('add-stream');
+    var merge = require('merge2');
+    var ts = require('gulp-typescript');
+    var require_merge = require('./_require-merge.js');
+    var tsProject = require_merge('_tsProject.js');
+
 
     //concat = require('gulp-concat')
 
