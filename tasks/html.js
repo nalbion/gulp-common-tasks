@@ -2,41 +2,66 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var minifyHtml = require('gulp-htmlmin');
+var minifyCss = require('gulp-clean-css');
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
-    var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
+    // var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
 
     return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
-        // Replace path for vulcanized assets
+        // Replace path for vulcanized assets (for Polymer projects)
         .pipe($.if('*.html', $.replace('elements/elements.html', 'elements/elements.vulcanized.html')))
-        .pipe(assets)
-        // Concatenate and minify JavaScript
-        .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
-        // Remove any unused CSS
-        .pipe($.if('*.css', $.uncss({
-            html: [
-                'app/index.html'
+
+        .pipe($.usemin({
+            css: [ $.rev() ],
+            html: [ function() {
+                return minifyHtml({
+                    removeComments: true,
+                    preserveLineBreaks: true,
+                    collapseWhitespace: true
+                })
+            } ],
+            js: [
+                //$.uglify,
+                $.rev
             ],
-            // CSS Selectors for UnCSS to ignore
-            ignore: [
-                /.navdrawer-container.open/,
-                /.app-bar.open/
-            ]
-        })))
-        // Concatenate and minify styles
-        // In case you are still using useref build blocks
-        .pipe($.if('*.css', $.csso()))
-        .pipe(assets.restore())
-        .pipe($.useref())
-        // Update production Style Guide paths
-        .pipe($.replace('components/components.css', 'components/main.min.css'))
-        // Minify any HTML
-        .pipe($.if('*.html', $.minifyHtml({
-            quotes: true,
-            empty: true,
-            spare: true
-        })))
+            inlinejs: [ $.uglify ],
+            inlinecss: [ minifyCss, 'concat' ]
+        }))
+        // .pipe(minifyHtml({
+        //     removeComments: true,
+        //     preserveLineBreaks: true,
+        //     collapseWhitespace: true
+        // }))
+
+        // .pipe(assets)
+        // // Concatenate and minify JavaScript
+        // .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
+        // // Remove any unused CSS
+        // .pipe($.if('*.css', $.uncss({
+        //     html: [
+        //         'app/index.html'
+        //     ],
+        //     // CSS Selectors for UnCSS to ignore
+        //     ignore: [
+        //         /.navdrawer-container.open/,
+        //         /.app-bar.open/
+        //     ]
+        // })))
+        // // Concatenate and minify styles
+        // // In case you are still using useref build blocks
+        // .pipe($.if('*.css', $.csso()))
+        // .pipe(assets.restore())
+        // .pipe($.useref())
+        // // Update production Style Guide paths
+        // .pipe($.replace('components/components.css', 'components/main.min.css'))
+        // // Minify any HTML
+        // .pipe($.if('*.html', $.minifyHtml({
+        //     quotes: true,
+        //     empty: true,
+        //     spare: true
+        // })))
         // Output files
         .pipe(gulp.dest('dist'))
         .pipe($.size({title: 'html'}));

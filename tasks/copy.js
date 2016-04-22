@@ -7,9 +7,12 @@ var $ = require('gulp-load-plugins')();
 gulp.task('copy', function () {
     var app = gulp.src([
         'app/*',
+        '!app/**/*.{less,sass,scss,ts}',
+        '!app/**/*_{spec,test}.{js,ts}',
         '!app/*.html',
         '!app/test',
         '!app/precache.json',
+        '!app/README.md',
         //'node_modules/apache-server-configs/dist/.htaccess'
     ], {
         dot: true

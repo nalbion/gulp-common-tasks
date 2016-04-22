@@ -2,8 +2,9 @@
 var argv = require('yargs').argv;
 
 var config = {
+    clean: ['.tmp', 'dist/*', '!dist/.git'],
     serve: {
-        dependencies: ['styles', 'styles:elements', 'images']
+        dependencies: ['styles', 'styles:elements', 'images']        
     },
     watch: [
         {glob: ['app/**/*.html'], tasks: ['ng-templates'], reload: true},
@@ -15,6 +16,9 @@ var config = {
     ],
     paths: {
         dest: argv.production ? 'dist' : '.tmp'
+    },
+    fonts: {
+        src: ['app/fonts/**']
     },
     styles: {
         src: [
@@ -35,7 +39,11 @@ var config = {
             'app/app*.ts',
             'app/components/**/*.ts'
         ], 
-        dest: '.tmp/js'
+        dest: '.tmp/js',
+        features: {
+            src: 'features/steps/**/*.ts',
+            dest: 'features/steps/'
+        }
     },
     ngTemplates: {
         src: [

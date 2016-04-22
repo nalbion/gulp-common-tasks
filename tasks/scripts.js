@@ -51,19 +51,21 @@ gulp.task('typescript', function () {
 });
 
 gulp.task('scripts:requirejs', ['typescript:dev'], function() {
-    return gulp.src(['.tmp/js/app.js',
-        '.tmp/js/extras.js'])
+    return gulp.src([
+            config.typescript.dest + '/app.js',
+            config.typescript.dest + '/extras.js'
+        ])
         .pipe(requirejsOptimize(require('./_requirejsOptimize')))
         .pipe(gulp.dest(config.paths.dest));
 });
 
-config.typescript.src = [
-    'app/*.ts',
-    'app/{components,views}/**/*.ts'
-];
+gulp.task('typescript:features', function() {
+    return gulp.src(config.typescript.features.src)
+        .pipe(ts({}))
+        .pipe(gulp.dest(config.typescript.features.dest));
+});
 
 gulp.task('typescript:dev', function () {
-console.info('config.typescript.src:', config.typescript.src);
     //var tsResult = gulp.src('app/**/*.ts')
     //    .pipe(ts({
     //        typescript: require('typescript'),
@@ -86,7 +88,7 @@ console.info('config.typescript.src:', config.typescript.src);
 //            .pipe(replace(/'[-\w\/]*\/app\//g, '\'js/'))
             //.pipe(amdOptimize(requirejsConfig))
             //.pipe(concat('main.js'))
-            //.pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
+            .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
             .pipe(gulp.dest(config.typescript.dest)),
         //tsResult.js
         //    .pipe(ts.filter(tsProject, { referencedFrom: ['extras.ts'] }))
@@ -102,7 +104,7 @@ function prepareTemplates() {
     // we get a conflict with the < % = var % > syntax for $templateCache
     // template header, so we'll just encode values to keep yo happy
     var encodedHeader = "angular.module(&quot;&lt;%= module %&gt;&quot;&lt;%= standalone %&gt;).run([&quot;$templateCache&quot;, function($templateCache:any) {";
-    return gulp.src('app/components/!**!/!*.html')
+    return gulp.src('app/components/**/*.html')
         .pipe(templateCache('templates.ts', {
             root: "app-templates",
             module: "app.templates",

@@ -9,7 +9,7 @@ gulp.task('protractor:cucumber', function(callback) {
             configFile: 'features/protractor.conf.js',
             args: ['--baseUrl', 'http://127.0.0.1:8000'],
             debug: true,
-            autoStartStopServer: true
+            autoStartStopServer: true,
         }))
         .on('error', function(e) {
             console.log(e);
@@ -21,6 +21,14 @@ gulp.task('protractor:report', ['protractor:cucumber'], function() {
     gulp.src('test-reports/cucumber.json')
         .pipe(gulpProtractorCucumberHtmlReport())
         .pipe(gulp.dest('test-reports'));
+});
+
+gulp.task('protractor:html', ['protractor:report'], function() {
+    var reporter = require('gulp-protractor-cucumber-html-report');
+    gulp.src('test-reports/cucumber.json')
+        .pipe(reporter({
+            dest: 'test-reports/'
+        }));
 });
 
 function gulpProtractorCucumberHtmlReport(opts) {
