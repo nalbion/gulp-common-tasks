@@ -1,9 +1,10 @@
 module.exports = {
-    typescript: require('typescript'),
-    sortOutput: true,
+//    typescript: require('typescript'),
+//    sortOutput: true,
     declarationFiles: true,
-    noExternalResolve: true,
-    mapRoot: '../bower_components',
+    //noExternalResolve: true,
+    experimentalDecorators: true,
+    //mapRoot: '../bower_components',
     //emitDecoratorMetadata: true,
     //declaration: false,
     // use SystemJS to build your files to es5 with System.register wrapper

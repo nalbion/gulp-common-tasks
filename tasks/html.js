@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
+
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
     var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
@@ -10,6 +11,7 @@ gulp.task('html', function () {
     return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
         // Replace path for vulcanized assets
         .pipe($.if('*.html', $.replace('elements/elements.html', 'elements/elements.vulcanized.html')))
+        //.pipe($.if('*.html', injectSassAsCss()))
         .pipe(assets)
         // Concatenate and minify JavaScript
         .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))

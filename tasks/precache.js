@@ -7,14 +7,25 @@ var fs = require('fs');
 // The list will be consumed by the <platinum-sw-cache> element.
 gulp.task('precache', function (callback) {
     var dir = 'dist';
+    var config = {
+        cacheId: packageJson.name || path.basename(__dirname),
+        disabled: false
+    };
 
     glob('{elements,scripts,styles}/**/*.*', {cwd: dir}, function(error, files) {
         if (error) {
             callback(error);
         } else {
             files.push('index.html', './', 'bower_components/webcomponentsjs/webcomponents.min.js');
-            var filePath = path.join(dir, 'precache.json');
-            fs.writeFile(filePath, JSON.stringify(files), callback);
+
+            config.precache = files;
+
+            var md5 = crypto.createHash('md5');
+            md5.update(JSON.stringify(config.precache));
+            config.precacheFingerprint = md5.digest('hex');
+
+            var configPath = path.join(dir, 'cache-config.json');
+            fs.writeFile(configPath, JSON.stringify(config), callback);
         }
     });
 });

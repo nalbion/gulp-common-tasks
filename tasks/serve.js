@@ -7,6 +7,7 @@ var browserSync = require('browser-sync'),
     httpProxy = require('http-proxy'),
     path = require('path'),
     fs = require('fs'),
+    runSequence = require('run-sequence').use(gulp),
     require_merge = require('./_require-merge.js');
 
 var config = require_merge('_config.js');
@@ -18,16 +19,17 @@ var mockProxy = httpProxy.createProxyServer({
 
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles', 'styles:elements', 'images'], function () {
+gulp.task('serve', config.serve.dependencies, function () {
     browserSync({
         notify: false,
+        https: true,
         // Run as an https by uncommenting 'https: true'
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
         // https: true,
         server: {
             baseDir: [
-                '.',
+                //'.',
                 '.tmp',
                 'bower_components', 'node_modules',
                 'app'],
@@ -35,21 +37,23 @@ gulp.task('serve', ['styles', 'styles:elements', 'images'], function () {
                 '/bower_components': 'bower_components'
             },
             middleware: [
-                function (req, res, next) {
-                    var match = req.url.match(/^(\/api\/[^\?]+)(\?.*)?/);
-                    if (match) {
-                        var reqPath = match[1];
-                        reqPath = path.resolve('app/mock-server') + reqPath;
-                        if (fs.existsSync(reqPath + '.js')) {
-                            res.end(require(reqPath + '.js')(req, res));
-                        } else if (fs.existsSync(reqPath)) {
-                            mockProxy.web(req, res);
-                        } else {
-                            res.end('hacked from gulpfile');
-                        }
-                    } else
-                        next();
-                }
+                require('./_apiMiddleware')
+                //function (req, res, next) {
+                //    var match = req.url.match(/^(\/api\/[^\?]+)(\?.*)?/);
+                //    if (match) {
+                //        var reqPath = match[1];
+                //        reqPath = path.resolve('app/mock-server') + reqPath;
+                //        if (fs.existsSync(reqPath + '.js')) {
+                //            res.end(require(reqPath + '.js')(req, res));
+                //        } else if (fs.existsSync(reqPath)) {
+                //            mockProxy.web(req, res);
+                //        } else {
+                //            res.end('hacked from gulpfile for ' + req.url);
+                //        }
+                //    } else {
+                //        next();
+                //    }
+                //}
             ]
         }
     });
@@ -66,7 +70,10 @@ gulp.task('serve', ['styles', 'styles:elements', 'images'], function () {
         if (watchConfig.reload) {
             tasks.push(reload);
         }
+        //tasks = function(cb) { runSequence(tasks, cb); };
         gulp.watch(watchConfig.glob, tasks);
+        //gulp.watch(watchConfig.glob, runSequence.bind(null, tasks));
+        //gulp.watch(watchConfig.glob, function() { runSequence.apply(this, tasks); });
     }
 });
 
@@ -75,6 +82,7 @@ gulp.task('serve', ['styles', 'styles:elements', 'images'], function () {
 gulp.task('serve:dist', ['default'], function () {
     browserSync({
         notify: false,
+        https: true,
         // Run as an https by uncommenting 'https: true'
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
