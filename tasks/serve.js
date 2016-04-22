@@ -1,25 +1,16 @@
 'use strict';
 
 var gulp = require('gulp');
-
-var browserSync = require('browser-sync'),
-    reload = browserSync.reload,
-    httpProxy = require('http-proxy'),
-    path = require('path'),
-    fs = require('fs'),
-    runSequence = require('run-sequence').use(gulp),
-    require_merge = require('./_require-merge.js');
-
-var config = require_merge('_config.js');
-
-
-var mockProxy = httpProxy.createProxyServer({
-    target: 'http://localhost:3000/mock-server/'
-});
+var config = require('./__config.js');
 
 
 // Watch files for changes & reload
 gulp.task('serve', config.serve.dependencies, function () {
+    var browserSync = require('browser-sync'),
+        reload = browserSync.reload,
+        path = require('path'),
+        fs = require('fs');
+
     browserSync({
         notify: false,
         https: true,
@@ -32,28 +23,14 @@ gulp.task('serve', config.serve.dependencies, function () {
                 //'.',
                 '.tmp',
                 'bower_components', 'node_modules',
-                'app'],
+                'app',
+                'dist'
+                ],
             routes: {
                 '/bower_components': 'bower_components'
             },
             middleware: [
                 require('./_apiMiddleware')
-                //function (req, res, next) {
-                //    var match = req.url.match(/^(\/api\/[^\?]+)(\?.*)?/);
-                //    if (match) {
-                //        var reqPath = match[1];
-                //        reqPath = path.resolve('app/mock-server') + reqPath;
-                //        if (fs.existsSync(reqPath + '.js')) {
-                //            res.end(require(reqPath + '.js')(req, res));
-                //        } else if (fs.existsSync(reqPath)) {
-                //            mockProxy.web(req, res);
-                //        } else {
-                //            res.end('hacked from gulpfile for ' + req.url);
-                //        }
-                //    } else {
-                //        next();
-                //    }
-                //}
             ]
         }
     });
@@ -79,7 +56,8 @@ gulp.task('serve', config.serve.dependencies, function () {
 
 
 // Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], function () {
+gulp.task('serve:dist', ['build'], function () {
+    var browserSync = require('browser-sync');
     browserSync({
         notify: false,
         https: true,

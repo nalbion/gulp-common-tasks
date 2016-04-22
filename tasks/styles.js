@@ -2,14 +2,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var require_merge = require('./_require-merge.js');
-var config = require_merge('_config.js');
-var nodeSass = require('node-sass');
-var path = require('path');
-var fs = require('fs');
-//var map = require('map-stream');
-var through = require('through2');
+var config = require('./__config.js');
 
 
 var AUTOPREFIXER_BROWSERS = [
@@ -24,11 +17,11 @@ var AUTOPREFIXER_BROWSERS = [
     'bb >= 10'
 ];
 
-gulp.task('styles', function () {
+gulp.task('styles', 'Processes SASS files', function () {
     return styleTask('styles', config.styles.src);
 });
 
-gulp.task('styles:elements', function () {
+gulp.task('styles:elements', 'Processes SASS files in app/elements', function () {
     return styleTask('elements', config.styles.elements);
 });
 
@@ -38,16 +31,45 @@ gulp.task('styles:inject', function() {
        .pipe(gulp.dest('.tmp/elements'));
 });
 
+gulp.task('sass', function () {
+    var sass = require('gulp-sass');
+
+    return gulp.src(config.styles.src)
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('concatCss', ['sass'], function () {
+    var concatCss = require('gulp-concat-css');
+
+    return gulp.src('dist/css/**/*.css')
+        .pipe(concatCss('app.css'))
+        .pipe(gulp.dest('dist'))
+});
+
+gulp.task('cssNano', ['sass', 'concatCss'], function() {
+    var cssNano   = require('gulp-cssnano');
+    var rename    = require('gulp-rename');
+
+    return gulp.src('dist/app.css')
+        .pipe(cssNano())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('dist'));
+});
+
+
 var styleTask = function (stylesPath, srcs) {
+    var $ = require('gulp-load-plugins')();
+
     return gulp.src(srcs)
         .pipe($.sourcemaps.init())
         //.pipe($.changed('.tmp/styles', {extension: '.css'}))
         .pipe($.sass({
             precision: 10,
-            onError: console.error.bind(console, 'Sass error:')
-        }))
+            //onError: console.error.bind(console, 'Sass error:')
+        }).on('error', $.sass.logError))
         .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-        .pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write({sourceRoot: '.'}))
         .pipe(gulp.dest('.tmp/' + stylesPath))
         .pipe($.if('*.css', $.csso()))
         .pipe(gulp.dest('dist/' + stylesPath))
@@ -55,6 +77,11 @@ var styleTask = function (stylesPath, srcs) {
 };
 
 function injectSassAsCss() {
+    var through = require('through2');
+    var fs = require('fs');
+    var path = require('path');
+    var nodeSass = require('node-sass');
+
     //return map(function (file, cb) {
     return through.obj(function(file, enc, cb) {
         var injectString = '/* inject{scss} */';

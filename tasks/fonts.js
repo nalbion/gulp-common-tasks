@@ -1,12 +1,11 @@
 'use strict';
 
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
+var config = require('./__config.js');
 
-
-// Copy web fonts to dist
-gulp.task('fonts', function () {
-    return gulp.src(['app/fonts/**'])
+gulp.task('fonts', 'Copy web fonts to dist', function () {
+    var size = require('gulp-size');
+    return gulp.src(config.fonts.src)
         .pipe(gulp.dest('dist/fonts'))
         .pipe($.size({title: 'fonts'}));
 });

@@ -1,12 +1,11 @@
 'use strict';
 
 var gulp = require('gulp');
-var path = require('path');
-var require_merge = require('./_require-merge.js');
+var config = require('./__config.js');
 
-var config = require_merge('_config.js');
+gulp.task('swagger:angular', '<Angular> Generates API services - see the README', function () {
+    var path = require('path');
 
-gulp.task('swagger:angular', function () {
     if (config && config.swagger) {
         var fs = require('fs');
 
@@ -35,7 +34,9 @@ gulp.task('swagger:angular', function () {
     }
 });
 
-gulp.task('swagger:polymerts', function () {
+gulp.task('swagger:polymerts', '<Polymer TypeScript> Generates API services - see the README', function () {
+    var path = require('path');
+
     if (config && config.swagger) {
         var fs = require('fs');
 

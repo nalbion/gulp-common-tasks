@@ -1,21 +1,23 @@
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var argv = require('yargs').argv,
-    ts = require('gulp-typescript'),
-    replace = require('gulp-replace'),
-    sourcemaps = require('gulp-sourcemaps'),
-    concat = require('gulp-concat'),
-    merge = require('merge2'),
-    _ = require('underscore')
-    require_merge = require('./_require-merge.js');
+var config = require('./__config.js');
 
 
-var config = require_merge('_config.js'),
-    tsProject = require_merge('_tsProject.js'),
-    systemjsConfig = require_merge('_systemjsConfig.js');
+gulp.task('typescript:lint', 'Runs tslint against ' + config.typescript.src, function() {
+    var tslint = require('gulp-tslint');
 
+    return gulp.src(config.typescript.src)
+        .pipe(tslint())
+        .pipe(tslint.report('default'));
+});
 
-gulp.task('scripts', ['typescript'], function () {
+gulp.task('typescript:split', 
+        'If `-production` is set, splits into app.js and extras.js (experimental)', 
+        ['typescript'], 
+        function () {
+    var require_merge = require('./_require-merge.js');
+    var systemjsConfig = require_merge('_systemjsConfig.js');
+    var argv = require('yargs').argv;
+
     if (argv.production) {
         var Builder = require('systemjs-builder');
         var builder = new Builder(systemjsConfig);
@@ -33,23 +35,31 @@ gulp.task('scripts', ['typescript'], function () {
     }
 });
 
-// skip source maps:  gulp scripts --production
-gulp.task('typescript', function () {
+gulp.task('typescript', 'To skip source maps: `gulp typescript --production`', function () {
+    var argv = require('yargs').argv;
+
     if (argv.production) {
-        gulp.start('scripts:requirejs');
+        gulp.start('typescript:requirejs');
     } else {
         gulp.start('typescript:dev');
     }
 });
 
-gulp.task('scripts:requirejs', ['typescript:dev'], function() {
-    return gulp.src(['.tmp/js/app.js',
-        '.tmp/js/extras.js'])
+gulp.task('typescript:requirejs', ['typescript:dev'], function() {
+    return gulp.src([
+            config.typescript.dest + '/app.js',
+            config.typescript.dest + '/extras.js'
+        ])
         .pipe(requirejsOptimize(require('./_requirejsOptimize')))
         .pipe(gulp.dest(config.paths.dest));
 });
 
+
 gulp.task('typescript:unit-test', ['typescript:elements','typescript:dev'], function() {
+    var ts = require('gulp-typescript'),
+        replace = require('gulp-replace');
+    //concat = require('gulp-concat')
+
     var tsTestProject = {
                             out: 'typescript-spec.js',
         //typescript: require('typescript'),
@@ -72,15 +82,25 @@ gulp.task('typescript:unit-test', ['typescript:elements','typescript:dev'], func
         .pipe(gulp.dest('test/unit'))
 });
 
-gulp.task('typescript:elements', function () {
+gulp.task('typescript:elements',
+    'Transpiles ' + config.typescript.elements.src + ' to ' + config.typescript.elements.dest,
+    function () {
     return typescriptTask(config.typescript.elements);
 });
 
-gulp.task('typescript:wct', function () {
+gulp.task('typescript:wct',
+    'Transpiles ' + config.typescript.wct.src + ' to ' + config.typescript.wct.dest,
+    function () {
+    var _ = require('underscore');
     return typescriptTask(_.extend(config.typescript.wct));
 });
 
 var typescriptTask = function(config) {
+    var require_merge = require('./_require-merge.js');
+    var tsProject = require_merge('_tsProject.js');
+    var merge = require('merge2');
+    var _ = require('underscore');
+
 //console.info(config);
     var mergedTsProject = _.extend({}, tsProject, config.tsProject);
     //if (mergedTsProject.out) {
@@ -106,7 +126,22 @@ var typescriptTask = function(config) {
 };
 
 
-gulp.task('typescript:dev', function () {
+
+gulp.task('typescript:features',
+    'Transpiles ' + config.typescript.features.src + ' to ' + config.typescript.features.dest,
+    function() {
+    return gulp.src(config.typescript.features.src)
+        .pipe(ts({}))
+        .pipe(gulp.dest(config.typescript.features.dest));
+});
+
+
+gulp.task('typescript:dev', 'Transpiles with sourcemap support', function () {
+    var sourcemaps = require('gulp-sourcemaps');
+    var addStream     = require('add-stream');
+
+    //concat = require('gulp-concat')
+
     //var tsResult = gulp.src('app/**/*.ts')
     //    .pipe(ts({
     //        typescript: require('typescript'),
@@ -116,7 +151,8 @@ gulp.task('typescript:dev', function () {
     //return tsResult.js.pipe(gulp.dest('.tmp'));
 
     var tsResult = gulp.src(config.typescript.src)
-        //.pipe(sourcemaps.init())
+        .pipe(addStream.obj(prepareTemplates()))
+        .pipe(sourcemaps.init())
         .pipe(ts(tsProject)); //, {}, ts.reporter.longReporter()));
 
     return merge(
@@ -126,10 +162,10 @@ gulp.task('typescript:dev', function () {
             //.pipe(replace(/'scripts\/_/, '\'js/'))
             //.pipe(replace(/(\.\.\/)*(bower_components\/)/g, ''))
             //// 'bower-my-jobjs/my-jobs/MyJobs'
-            .pipe(replace(/'[-\w\/]*\/app\//g, '\'js/'))
+//            .pipe(replace(/'[-\w\/]*\/app\//g, '\'js/'))
             //.pipe(amdOptimize(requirejsConfig))
             //.pipe(concat('main.js'))
-            //.pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
+            .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
             .pipe(gulp.dest(config.typescript.dest)),
         //tsResult.js
         //    .pipe(ts.filter(tsProject, { referencedFrom: ['extras.ts'] }))
@@ -141,3 +177,18 @@ gulp.task('typescript:dev', function () {
     );
 });
 
+function prepareTemplates() {
+    var _ = require('underscore');
+    var templateCache = require('gulp-angular-templatecache');
+
+    // we get a conflict with the < % = var % > syntax for $templateCache
+    // template header, so we'll just encode values to keep yo happy
+    var encodedHeader = "angular.module(&quot;&lt;%= module %&gt;&quot;&lt;%= standalone %&gt;).run([&quot;$templateCache&quot;, function($templateCache:any) {";
+    return gulp.src('app/components/**/*.html')
+        .pipe(templateCache('templates.ts', {
+            root: "app-templates",
+            module: "app.templates",
+            standalone : true,
+            templateHeader: _.unescape(encodedHeader)
+        }));
+}

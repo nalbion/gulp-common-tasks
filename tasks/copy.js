@@ -1,21 +1,23 @@
 'use strict';
 
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
 
-// Copy all files at the root level (app)
-gulp.task('copy', function () {
+gulp.task('copy', 'Copies un-processed files from app/ to dist/', function () {
+    var size = require('gulp-size');
     var app = gulp.src([
         'app/*',
+        '!app/**/*.{less,sass,scss,ts}',
+        '!app/**/*_{spec,test}.{js,ts}',
         '!app/*.html',
         '!app/test',
         '!app/precache.json',
+        '!app/README.md',
         //'node_modules/apache-server-configs/dist/.htaccess'
     ], {
         dot: true
     }).pipe(gulp.dest('dist'));
 
-    return app.pipe($.size({title: 'copy'}));
+    return app.pipe(size({title: 'copy'}));
 
     // Added by Polymer Starter Kit...
 

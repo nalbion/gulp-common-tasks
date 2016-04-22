@@ -1,14 +1,15 @@
-var gulp = require('gulp');
-var glob = require('glob');
-var path = require('path');
-var fs = require('fs');
+var gulp = require('gulp');;
 
 // Generate a list of files that should be precached when serving from 'dist'.
 // The list will be consumed by the <platinum-sw-cache> element.
-gulp.task('precache', function (callback) {
+gulp.task('precache', '<Polymer> Generates a list of files to be consumed by <platinum-sw-cache>', function (callback) {
+    var glob = require('glob');
+    var path = require('path');
+    var fs = require('fs');
+
     var dir = 'dist';
     var config = {
-        cacheId: packageJson.name || path.basename(__dirname),
+        cacheId: require('./__config.js').pkg.name || path.basename(__dirname),
         disabled: false
     };
 

@@ -2,8 +2,8 @@
 
 // Include Gulp & tools we'll use
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
 var del = require('del');
+var config = require('./__config.js');
 
 // Clean output directory
-gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
+gulp.task('clean', 'Deletes ' + config.clean, del.bind(null, config.clean, {dot: true}));

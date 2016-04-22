@@ -1,21 +1,25 @@
 'use strict';
 
 var gulp = require('gulp');
-var iconfont = require('gulp-iconfont');
-var iconfontCss = require('gulp-iconfont-css');
+var src = 'app/icons/svg/*.svg';
+var cssDest = '../styles/_icons.scss';
+var fontPath = '../fonts/';
+
+gulp.task('icons', 'Converts ' + src + ' into webfonts: ' + cssDest + ', ' + fontPath, function() {
+    var iconfont = require('gulp-iconfont');
+    var iconfontCss = require('gulp-iconfont-css');
 //var consolidate = require('gulp-consolidate');
-var require_merge = require('./_require-merge.js');
+    var require_merge = require('./_require-merge.js');
 
-var config = require_merge('_config.js');
-var fontName = 'icon';
+    var config = require('./__config.js');
+    var fontName = 'icon';
 
-gulp.task('icons', function() {
-    gulp.src(['app/icons/svg/*.svg'])
+    gulp.src([src])
         .pipe(iconfontCss({
             fontName: fontName,
             path: 'scss', // 'app/assets/css/templates/_icons.scss',
-            targetPath: '../styles/_icons.scss',
-            fontPath: '../fonts/'
+            targetPath: cssDest,
+            fontPath: fontPath
         }))
         .pipe(iconfont({
             fontName: fontName

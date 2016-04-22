@@ -1,49 +1,61 @@
 var gulp = require('gulp');
-var lazypipe = require('lazypipe');
-var mocha = require('gulp-mocha');
-var runSequence = require('run-sequence');
-var jshint = require('gulp-jshint');
-var wct = require('web-component-tester');
-var async = require('async');
-var serveWaterfall = require('serve-waterfall');
 
+var config = require('./__config.js');
 
-gulp.task('test', function(done) {
-    runSequence('test:style', 'test:unit', done);
-});
-gulp.task('test:all', function(done) {
-    runSequence('test', 'test:integration', done);
-});
+gulp.task('test', ['test:style', 'test:unit']);
+gulp.task('test:all', ['test', 'test:integration']);
 
-gulp.task('test:style', function() {
+gulp.task('test:style', 'Runs all .js files through jshint', function() {
+    var lazypipe = require('lazypipe');
+    var jshint = require('gulp-jshint');
+
+    var jshintFlow = lazypipe()
+        .pipe(jshint)
+        .pipe(jshint.reporter, 'jshint-stylish')
+        .pipe(jshint.reporter, 'fail');
+
     return gulp.src([
-        '{browser,runner,environment,tasks}/**/*.js',
+        '{components,elements,browser,runner,environment,tasks}/**/*.js',
         'gulpfile.js',
     ]).pipe(jshintFlow());
 });
 
-gulp.task('test:unit', function() {
-    return gulp.src(['test/unit/*.js'], {read: false})
+gulp.task('test:unit', 'Runs mocha tests in ' + config.test.unit.src, function() {
+    var mocha = require('gulp-mocha');
+    return gulp.src(config.test.src, {read: false})
         .pipe(mocha({reporter: 'spec'}));
 });
 
-gulp.task('test:integration', function() {
-    return gulp.src('test/integration/*.js', {read: false})
+gulp.task('test:integration', 'Runs mocha tests in ' + config.test.integration.src, function() {
+    var mocha = require('gulp-mocha');
+    return gulp.src(config.test.integration.src, {read: false})
         .pipe(mocha({reporter: 'spec'}));
 });
 
 
 //wct.gulp.init(gulp, []);  // provides `gulp wtc, test:local (wct:local), test:remote (wct:sauce)`
 // wct.test, wct.config, wct.steps, wtc.test
-gulp.task('test:elements', ['typescript:unit-test'], function(done) {
+gulp.task('test:elements', '<Polymer> runs WCT tests in ' + config.test.wct.src, ['typescript:unit-test'], function(done) {
     //async.series([]);
+    var wct = require('web-component-tester');
+
+    wct.cleanDone = function(done) {
+        return function(error) {
+            if (error) {
+                // Pretty error for gulp.
+                error = new Error(chalk.red(error.message || error));
+                error.showStack = false;
+            }
+            done(error);
+        };
+    };
 
     // runs steps.setupOverrides, loadPlugins, configure, prepare, runTests
     wct.test({
         //verbose: true,
         //expanded: true,
         persistent:  true,
-        suites:      ['test/elements'],
+        suites:      config.test.wct.src,
 //        extraScripts: ['../polymer-ts/polymer-ts.js'],
         //breaks socketio? extraScripts: ['../requirejs/require.js'],
         //clientOptions: {
@@ -75,19 +87,5 @@ gulp.task('test:elements', ['typescript:unit-test'], function(done) {
     }, wct.cleanDone(done));
 });
 
-wct.cleanDone = function(done) {
-    return function(error) {
-        if (error) {
-            // Pretty error for gulp.
-            error = new Error(chalk.red(error.message || error));
-            error.showStack = false;
-        }
-        done(error);
-    };
-};
 
-// Flows
-var jshintFlow = lazypipe()
-    .pipe(jshint)
-    .pipe(jshint.reporter, 'jshint-stylish')
-    .pipe(jshint.reporter, 'fail');
+
