@@ -1,6 +1,6 @@
 {
   "name": "gulp-common-tasks",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": true,
   "main": "index.js",
   "files": [
@@ -45,7 +45,7 @@
     "gulp-uncss": "^1.0.1",
     "gulp-usemin": "^0.3.22",
     "http-proxy": "^1.11.1",
-    "lodash": "^3.8.0",
+    "lodash": "^3.10.1",
     "merge2": "^0.3.5",
     "node-sass": "^3.1.2",
     "orchestrator": "^0.3.7",

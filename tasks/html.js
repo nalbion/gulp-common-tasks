@@ -7,10 +7,18 @@ var minifyCss = require('gulp-clean-css');
 
 var version = require(require('path').resolve('package.json')).version;
 var build = process.env.bamboo_buildNumber || process.env.BUILD_NUMBER || 'dev';
+// bamboo_repository_branch_name  bamboo_planRepository_branchName
+// bamboo_ManualBuildTriggerReason_userName
+// bamboo_planRepository_revision
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
     // var assets = $.useref.assets({searchPath: ['.tmp', 'app', 'dist']});
+
+
+    console.info('html env:', process.env);
+    console.info('----------------------------------------');
+    console.info('process.env.bamboo_buildNumber:', process.env.bamboo_buildNumber);
 
     return gulp.src(['app/**/*.html', '!app/{elements,test}/**/*.html'])
         // Replace path for vulcanized assets (for Polymer projects)
