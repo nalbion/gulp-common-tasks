@@ -6,7 +6,7 @@ var minifyHtml = require('gulp-htmlmin');
 var minifyCss = require('gulp-clean-css');
 
 var version = require(require('path').resolve('package.json')).version;
-var build = process.env.BUILD || 'dev';
+var build = process.env.bamboo_buildNumber || process.env.BUILD_NUMBER || 'dev';
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
