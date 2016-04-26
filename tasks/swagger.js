@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var config = require('./__config.js');
+var config = require('./../tasks/__config.js');
 
 gulp.task('swagger:angular', '<Angular> Generates API services - see the README', function () {
     var path = require('path');

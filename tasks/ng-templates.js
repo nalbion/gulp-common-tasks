@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var config = require('./__config.js');
+var config = require('./../tasks/__config.js');
 
 gulp.task('ng-templates', '<Angular> Processes ' + config.ngTemplates.src + ' to ' + config.paths.dest + '/js/templates.js', function () {
     var concat = require('gulp-concat'),

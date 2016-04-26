@@ -9,7 +9,7 @@ gulp.task('precache', '<Polymer> Generates a list of files to be consumed by <pl
 
     var dir = 'dist';
     var config = {
-        cacheId: require('./__config.js').pkg.name || path.basename(__dirname),
+        cacheId: require('./../tasks/__config.js').pkg.name || path.basename(__dirname),
         disabled: false
     };
 

@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var config = require('./__config.js');
+var config = require('./../tasks/__config.js');
 
 
 gulp.task('typescript:lint', 'Runs tslint against ' + config.typescript.src, function() {
@@ -14,7 +14,7 @@ gulp.task('typescript:split',
         'If `-production` is set, splits into app.js and extras.js (experimental)', 
         ['typescript'], 
         function () {
-    var require_merge = require('./_require-merge.js');
+    var require_merge = require('./../tasks/_require-merge.js');
     var systemjsConfig = require_merge('_systemjsConfig.js');
     var argv = require('yargs').argv;
 
@@ -50,7 +50,7 @@ gulp.task('typescript:requirejs', ['typescript:dev'], function() {
             config.typescript.dest + '/app.js',
             config.typescript.dest + '/extras.js'
         ])
-        .pipe(requirejsOptimize(require('./_requirejsOptimize')))
+        .pipe(requirejsOptimize(require('./../tasks/_requirejsOptimize')))
         .pipe(gulp.dest(config.paths.dest));
 });
 
@@ -98,7 +98,7 @@ gulp.task('typescript:wct',
 );
 
 var typescriptTask = function(config) {
-    var require_merge = require('./_require-merge.js');
+    var require_merge = require('./../tasks/_require-merge.js');
     var tsProject = require_merge('_tsProject.js');
     var ts = require('gulp-typescript');
     var merge = require('merge2');
@@ -144,7 +144,7 @@ gulp.task('typescript:dev', 'Transpiles with sourcemap support to ' + config.typ
     var addStream     = require('add-stream');
     var merge = require('merge2');
     var ts = require('gulp-typescript');
-    var require_merge = require('./_require-merge.js');
+    var require_merge = require('./../tasks/_require-merge.js');
     var tsProject = require_merge('_tsProject.js');
     //concat = require('gulp-concat')
 

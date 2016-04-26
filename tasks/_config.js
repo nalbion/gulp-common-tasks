@@ -52,6 +52,13 @@ var config = {
             'app/components/**/*.ts'
         ],
         dest: '.tmp/js',
+        elements: {
+            src: [
+                'app/elements/**/*.ts',
+                'app/pages/**/*.ts'
+            ],
+            dest: '.tmp/elements'
+        },
         unitTest: {
             src: ['app/{scripts,test,components,elements}/**/*-spec.ts'],
             dest: '.tmp/js',

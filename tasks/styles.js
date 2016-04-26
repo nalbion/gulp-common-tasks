@@ -2,7 +2,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var config = require('./__config.js');
+var config = require('./../tasks/__config.js');
 
 
 var AUTOPREFIXER_BROWSERS = [

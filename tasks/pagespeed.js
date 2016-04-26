@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var pagespeed = require('psi');
-var config = require('./__config.js'),
+var config = require('./../tasks/__config.js'),
     pkg = config.pkg;
 
 gulp.task('pagespeed', '<test> Run PageSpeed Insights: ' + pkg.homepage, function (cb) {

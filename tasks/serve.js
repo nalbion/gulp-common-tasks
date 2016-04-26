@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var config = require('./__config.js');
+var config = require('./../tasks/__config.js');
 
 
 // Watch files for changes & reload
@@ -30,7 +30,7 @@ gulp.task('serve', config.serve.dependencies, function () {
                 '/bower_components': 'bower_components'
             },
             middleware: [
-                require('./_apiMiddleware')
+                require('./../tasks/_apiMiddleware')
             ]
         }
     });

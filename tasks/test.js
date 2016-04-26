@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-var config = require('./__config.js');
+var config = require('./../tasks/__config.js');
 
 gulp.task('test', ['test:style', 'test:unit']);
 gulp.task('test:all', ['test', 'test:integration']);
@@ -66,7 +66,7 @@ gulp.task('test:elements',
         //},
         registerHooks: function(wct) {
           wct.hook('prepare:webserver', function(app, done) {
-            app.use(require('./_apiMiddleware'));
+            app.use(require('./../tasks/_apiMiddleware'));
             done();
           });
         },
