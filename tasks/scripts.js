@@ -133,6 +133,7 @@ var typescriptTask = function(config) {
 gulp.task('typescript:features',
     'Transpiles ' + config.typescript.features.src + ' to ' + config.typescript.features.dest,
     function() {
+    var ts = require('gulp-typescript');
     return gulp.src(config.typescript.features.src)
         .pipe(ts({}))
         .pipe(gulp.dest(config.typescript.features.dest));
