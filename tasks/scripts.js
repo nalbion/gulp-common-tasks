@@ -104,7 +104,7 @@ var typescriptTask = function(config) {
     var merge = require('merge2');
     var _ = require('underscore');
 
-console.info(config);
+//console.info(config);
     var mergedTsProject = _.extend({}, tsProject, config.tsProject);
     //if (mergedTsProject.out) {
     //    delete mergedTsProject.module;
