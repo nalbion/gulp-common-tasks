@@ -1,5 +1,5 @@
 module.exports = {
-//    typescript: require('typescript'),
+    typescript: require('typescript'),
     sortOutput: true,
     declarationFiles: true,
     //noExternalResolve: true,
