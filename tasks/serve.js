@@ -20,7 +20,7 @@ gulp.task('serve', config.serve.dependencies, function () {
         // https: true,
         server: {
             baseDir: [
-                //'.',
+                '.',
                 '.tmp',
                 'bower_components', 'node_modules',
                 'app',

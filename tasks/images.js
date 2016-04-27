@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var src = 'app/images/**/*';
+var src = ['app/images/**/*', '!app/images/**/README.md'];
 var dest = 'dist/images/';
 
 gulp.task('images', 'Optimize ' + src + ' to ' + dest, function () {
