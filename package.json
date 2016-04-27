@@ -1,6 +1,6 @@
 {
   "name": "gulp-common-tasks",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Common tasks pre-configured for Gulp",
   "repository": {
     "url": "https://github.com/nalbion/gulp-common-tasks.git"
@@ -63,7 +63,7 @@
     "require-dir": "^0.3.0",
     "requirejs": "^2.1.22",
     "run-sequence": "^1.1.5",
-    "swagger-js-codegen": "^1.1.2",
+    "swagger-js-codegen": "git://github.com/nalbion/swagger-js-codegen.git#feature/typescript-angular",
     "through2": "^2.0.1",
     "tslint": "^3.7.4",
     "typescript": "^1.8.10",
