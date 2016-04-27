@@ -6,12 +6,14 @@ gulp.task('copy', 'Copies un-processed files from app/ to dist/', function () {
     var size = require('gulp-size');
     var app = gulp.src([
         'app/*',
+        '.tmp/*.css',
         '!app/**/*.{less,sass,scss,ts}',
         '!app/**/*_{spec,test}.{js,ts}',
         '!app/*.html',
         '!app/test',
+        '!app/components',
         '!app/precache.json',
-        '!app/README.md',
+        '!app/**/README.md'
         //'node_modules/apache-server-configs/dist/.htaccess'
     ], {
         dot: true
