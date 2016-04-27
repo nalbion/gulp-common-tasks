@@ -36,25 +36,25 @@ gulp.task('sass', function () {
 
     return gulp.src(config.styles.src)
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest('.tmp/css'));
 });
 
 gulp.task('concatCss', ['sass'], function () {
     var concatCss = require('gulp-concat-css');
 
-    return gulp.src('dist/css/**/*.css')
+    return gulp.src('.tmp/css/**/*.css')
         .pipe(concatCss('app.css'))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('.tmp'))
 });
 
 gulp.task('cssNano', ['sass', 'concatCss'], function() {
     var cssNano   = require('gulp-cssnano');
     var rename    = require('gulp-rename');
 
-    return gulp.src('dist/app.css')
+    return gulp.src('.tmp/app.css')
         .pipe(cssNano())
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('.tmp'));
 });
 
 
