@@ -7,5 +7,5 @@ gulp.task('fonts', 'Copy web fonts to dist', function () {
     var size = require('gulp-size');
     return gulp.src(config.fonts.src)
         .pipe(gulp.dest('dist/fonts'))
-        .pipe($.size({title: 'fonts'}));
+        .pipe(size({title: 'fonts'}));
 });
