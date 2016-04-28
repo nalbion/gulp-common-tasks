@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
         target: 'http://localhost:3000/mock-server/'
     });
 
-    console.info('req:', req.url);
+    //console.info('req:', req.url);
     var match = req.url.match(/^(\/api\/[^\?]+)(\?.*)?/);
     if (match) {
         var reqPath = match[1];
