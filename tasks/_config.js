@@ -66,7 +66,7 @@ var config = {
                 //'app/{scripts,test,components,elements}/**/*-spec.ts'
                 'app/test/elements/**/*.ts'
             ],
-            dest: '.tmp/wct',
+            dest: 'app/test/elements',
             //tsProject: {module: 'commonjs'}
             // tsProject: {out: 'typescript-wct.js'}
         }
@@ -81,6 +81,10 @@ var config = {
             //standalone: false,
             //moduleSystem: 'RequireJS'
         }
+    },
+    vulcanize: {
+        src: 'app/elements/elements.html',
+        dest: 'dist/elements'
     }
 };
 
