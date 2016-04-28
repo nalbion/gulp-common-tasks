@@ -6,6 +6,7 @@ gulp.task('precache', '<Polymer> Generates a list of files to be consumed by <pl
     var glob = require('glob');
     var path = require('path');
     var fs = require('fs');
+    var crypto = require('crypto');
 
     var dir = 'dist';
     var config = {
