@@ -63,7 +63,7 @@ gulp.task('swagger:typescript', '<TypeScript> Generates API services - see the R
                 className: name,
                 swagger: swagger,
                 lint: false,
-                angular: true,
+                framework: 'angular',
                 imports: '../typings/browser.d.ts'
             };
             var tsSourceCode = CodeGen.getTypescriptCode(swaggerOpts);
