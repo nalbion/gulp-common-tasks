@@ -11,4 +11,5 @@ module.exports = {
     //target: 'ES6'
     target: 'ES5',
     module: 'amd'       // commonjs (for Node) or amd (eg RequireJS for web)
+    // SystemJS for web?  https://github.com/ivogabe/gulp-typescript/issues/243
 };

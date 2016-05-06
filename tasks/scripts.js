@@ -45,7 +45,8 @@ gulp.task('typescript', 'To skip source maps: `gulp typescript --production`', f
     }
 });
 
-gulp.task('typescript:requirejs', ['typescript:dev'], function() {
+gulp.task('typescript:requirejs', 'remove comments & uglify AMD modules', ['typescript:dev'], function() {
+    var requirejsOptimize = require('gulp-requirejs-optimize');
     return gulp.src([
             config.typescript.dest + '/app.js',
             config.typescript.dest + '/extras.js'
@@ -83,17 +84,41 @@ gulp.task('typescript:unit-test', ['typescript:elements','typescript:dev'], func
 });
 
 gulp.task('typescript:elements',
-    'Transpiles ' + config.typescript.elements.src + ' to ' + config.typescript.elements.dest,
+    'Compiles ' + config.typescript.elements.src + ' to ' + config.typescript.elements.dest,
     function () {
         return typescriptTask(config.typescript.elements);
     }
 );
 
+// TODO: http://blog.charto.net/typescript/Taming-Polymer-with-SystemJS-and-TypeScript-part-1/
 gulp.task('typescript:wct',
-    'Transpiles ' + config.typescript.wct.src + ' to ' + config.typescript.wct.dest,
+    'Compiles ' + config.typescript.wct.src + ' to ' + config.typescript.wct.dest,
     function () {
         var _ = require('underscore');
-        return typescriptTask(_.extend(config.typescript.wct));
+        var require_merge = require('./_require-merge.js');
+        var merge = require('merge2');
+        var ts = require('gulp-typescript');
+        var tsProject = require_merge('_tsProject.js');
+
+        // var app = gulp.src([
+        //         //'app/{scripts,elements}/**/*.ts',
+        //         'app/elements/**/*.ts',
+        //         '!app/routing.ts',
+        //         '!**/*-test.ts', '!**/*-tests.ts', '!**/*-spec.ts'
+        //     ])
+        //     .pipe(ts(_.extend({}, tsProject, {out: 'typescript-wct.js'})))
+        //     .pipe(gulp.dest('.tmp/wct'));
+
+        var tests = gulp.src([
+                'app/test/elements/**/*-tests.ts', 'app/test/elements/**/*-test.ts'
+            ])
+            .pipe(ts(_.extend({}, tsProject)))
+            .pipe(gulp.dest('./app/test/elements'));
+
+        // return merge(app, tests);
+        return tests;
+
+        //return typescriptTask(_.extend(config.typescript.wct));
     }
 );
 
@@ -138,14 +163,14 @@ gulp.task('typescript:features',
 });
 
 
-gulp.task('typescript:dev', 'Transpiles with sourcemap support to ' + config.typescript.dest, function () {
+gulp.task('typescript:dev', 'Compiles ' + config.typescript.src + ' with sourcemaps to ' + config.typescript.dest, function () {
     var sourcemaps = require('gulp-sourcemaps');
     var addStream     = require('add-stream');
     var merge = require('merge2');
     var ts = require('gulp-typescript');
     var require_merge = require('./_require-merge.js');
     var tsProject = require_merge('_tsProject.js');
-    //concat = require('gulp-concat')
+    var concat = require('gulp-concat')
 
     //var tsResult = gulp.src('app/**/*.ts')
     //    .pipe(ts({
@@ -169,7 +194,9 @@ gulp.task('typescript:dev', 'Transpiles with sourcemap support to ' + config.typ
             //// 'bower-my-jobjs/my-jobs/MyJobs'
 //            .pipe(replace(/'[-\w\/]*\/app\//g, '\'js/'))
             //.pipe(amdOptimize(requirejsConfig))
-            //.pipe(concat('main.js'))
+            .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
+            .pipe(gulp.dest(config.typescript.dest))
+            .pipe(concat('main.js'))
             .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
             .pipe(gulp.dest(config.typescript.dest)),
         //tsResult.js

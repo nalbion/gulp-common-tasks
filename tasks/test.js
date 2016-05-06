@@ -35,7 +35,7 @@ gulp.task('test:integration', 'Runs mocha tests in ' + config.test.integration.s
 
 //wct.gulp.init(gulp, []);  // provides `gulp wtc, test:local (wct:local), test:remote (wct:sauce)`
 // wct.test, wct.config, wct.steps, wtc.test
-gulp.task('test:elements',
+gulp.task('test:wct',
     '<Polymer> runs WCT tests in ' + config.test.wct.src,
     ['typescript:unit-test', 'typescript:wct'], function(done) {
     //async.series([]);
@@ -55,7 +55,7 @@ gulp.task('test:elements',
     // runs steps.setupOverrides, loadPlugins, configure, prepare, runTests
     wct.test({
         //verbose: true,
-        //expanded: true,
+        expanded: true,
         persistent:  true,
         suites:      config.test.wct.src,
 //        extraScripts: ['../polymer-ts/polymer-ts.js'],

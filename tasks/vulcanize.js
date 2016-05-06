@@ -31,7 +31,7 @@ gulp.task('vulcanize', '<Polymer> Vulcanize imports', ['vulcanize:elements2tmp']
     
     for (var key in config.vulcanize) {
         if (key == 'src') {
-            addVulcanizeSubTask('main', config.vulcanize, streams);
+            addVulcanizeSubTask('app', config.vulcanize, streams);
         } else if (key != 'dest' && key != 'stripExcludes') {
             addVulcanizeSubTask(key, config.vulcanize[key], streams);
         }
