@@ -1,17 +1,16 @@
 var gulp = require('gulp');
 
-
 // Setting up the test task 
 gulp.task('protractor:cucumber', '<test> runs Protractor with the Cucumber plugin', function(callback) {
     var gulpProtractorAngular = require('gulp-angular-protractor');
     
     gulp
-        .src(['features/*.feature'])
+        .src(['features/**/*.feature'])
         .pipe(gulpProtractorAngular({
             configFile: 'features/protractor.conf.js',
             args: ['--baseUrl', 'http://127.0.0.1:8000'],
-            debug: true,
-            autoStartStopServer: true,
+            // debug: true,
+            autoStartStopServer: true
         }))
         .on('error', function(e) {
             console.log(e);
