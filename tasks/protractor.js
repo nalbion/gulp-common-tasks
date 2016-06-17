@@ -18,13 +18,13 @@ gulp.task('protractor:cucumber', '<test> runs Protractor with the Cucumber plugi
         .on('end', callback);
 });
 
-gulp.task('protractor:report', 'Parses test-reports/cucumber.json to XML', ['protractor:cucumber'], function() {
+gulp.task('protractor:report', 'Parses test-reports/cucumber.json to XML', function() {
     gulp.src('test-reports/cucumber.json')
         .pipe(gulpProtractorCucumberXmlReport())
         .pipe(gulp.dest('test-reports'));
 });
 
-gulp.task('protractor:html', 'Generates a HTML report from test-reports/cucumber.json', ['protractor:cucumber'], function() {
+gulp.task('protractor:html', 'Generates a HTML report from test-reports/cucumber.json', function() {
     var reporter = require('gulp-protractor-cucumber-html-report');
     gulp.src('test-reports/cucumber.json')
         .pipe(reporter({
