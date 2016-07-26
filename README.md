@@ -108,3 +108,15 @@ module.exports = {
     }
 };
 ```
+
+The schemas object also has 2 optional properties:
+- `moduleName` - You can specify a schema level module name which overrides the swagger.moduleName.
+- `domainName` - You can specify a schema level domain name which overrides the default value of 'domain'.
+
+```javascript
+{
+    'MyApi': 'node_modules/api-package/swagger.yaml',
+    'moduleName': 'myModule',
+    'domainName': 'myDomain'
+}
+```
