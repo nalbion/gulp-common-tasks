@@ -133,11 +133,16 @@ var typescriptTask = function(config) {
 gulp.task('typescript:features',
     'Transpiles ' + config.typescript.features.src + ' to ' + config.typescript.features.dest,
     function() {
-    var ts = require('gulp-typescript');
-    return gulp.src(config.typescript.features.src)
-        .pipe(ts({}))
-        .pipe(gulp.dest(config.typescript.features.dest));
-});
+        var ts = require('gulp-typescript'),
+            sourcemaps = require('gulp-sourcemaps');
+        
+        return gulp.src(config.typescript.features.src)
+                    .pipe(sourcemaps.init())
+                    .pipe(ts({}))
+                    .pipe(sourcemaps.write())
+                    .pipe(gulp.dest(config.typescript.features.dest));
+    }
+);
 
 
 gulp.task('typescript:dev', 'Transpiles with sourcemap support to ' + config.typescript.dest, function () {
