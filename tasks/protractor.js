@@ -20,7 +20,7 @@ gulp.task('protractor:cucumber', '<test> runs Protractor with the Cucumber plugi
 
 gulp.task('protractor:report', 'Parses test-reports/cucumber.json to XML', function() {
     gulp.src('test-reports/cucumber.json')
-        .pipe(gulpProtractorCucumberXmlReport())
+        .pipe(gulpProtractorCucumberXmlReport({strict:true}))
         .pipe(gulp.dest('test-reports'));
 });
 
@@ -35,7 +35,7 @@ gulp.task('protractor:html', 'Generates a HTML report from test-reports/cucumber
 function gulpProtractorCucumberXmlReport(opts) {
     var gutil = require('gulp-util'),
         through = require('through2'),
-        cucumberJunit = require('cucumberjs-junitxml');
+        cucumberJunit = require('cucumber-junit');
 
     return through.obj(function (file, enc, cb) {
         var xml = cucumberJunit(file.contents, opts);
