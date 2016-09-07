@@ -47,12 +47,12 @@ gulp.task('concatCss', ['sass'], function () {
         .pipe(gulp.dest('.tmp'))
 });
 
-gulp.task('cssNano', ['sass', 'concatCss'], function() {
-    var cssNano   = require('gulp-cssnano');
+gulp.task('minifyCss', ['sass', 'concatCss'], function() {
+    var minifyCss   = require('gulp-clean-css');
     var rename    = require('gulp-rename');
 
     return gulp.src('.tmp/app.css')
-        .pipe(cssNano())
+        .pipe(minifyCss())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('.tmp'));
 });

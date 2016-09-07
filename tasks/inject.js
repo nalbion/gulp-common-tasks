@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 
-gulp.task('inject', 'Inject dist + bower lib files', ['scripts', 'cssNano'], function(){
+gulp.task('inject', 'Inject dist + bower lib files', ['scripts', 'minifyCss'], function(){
     var inject  = require('gulp-inject');
     var wiredep = require('wiredep').stream;
     var path = require('path');
