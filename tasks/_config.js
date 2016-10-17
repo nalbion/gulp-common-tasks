@@ -37,10 +37,10 @@ var config = {
     },
     test: {
         unit: {
-            src: 'test/unit/*.js'
+            src: ['test/unit/*.js']
         },
         integration: {
-            src: 'test/integration/*.js'
+            src: ['test/integration/*.js']
         },
         wct: {
             src: ['test/elements/**/*']
