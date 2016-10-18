@@ -1,6 +1,6 @@
 {
   "name": "gulp-common-tasks",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Common tasks pre-configured for Gulp",
   "repository": {
     "url": "https://github.com/nalbion/gulp-common-tasks.git"
@@ -18,7 +18,7 @@
     "del": "^1.1.1",
     "glob": "^5.0.10",
     "gulp": "^3.9.1",
-    "gulp-angular-protractor": "^0.1.1",
+    "gulp-angular-protractor": "^0.2.0",
     "gulp-angular-templatecache": "^1.6.0",
     "gulp-autoprefixer": "^2.3.0",
     "gulp-cache": "^0.2.9",
