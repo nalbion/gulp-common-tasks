@@ -38,6 +38,11 @@ function gulpProtractorCucumberXmlReport(opts) {
         cucumberJunit = require('cucumber-junit');
 
     return through.obj(function (file, enc, cb) {
+        var suffix = file.path.match(/\/cucumber-?(.*)\.json/);
+        if (suffix) {
+            opts.prefix = suffix[1] + ';';
+        }
+
         var xml = cucumberJunit(file.contents, opts);
         //console.info(xml);
         //console.info()
