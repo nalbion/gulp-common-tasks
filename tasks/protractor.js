@@ -19,14 +19,14 @@ gulp.task('protractor:cucumber', '<test> runs Protractor with the Cucumber plugi
 });
 
 gulp.task('protractor:report', 'Parses test-reports/cucumber.json to XML', function() {
-    return gulp.src('test-reports/cucumber.json')
+    return gulp.src('test-reports/cucumber*.json')
         .pipe(gulpProtractorCucumberXmlReport({strict:true}))
         .pipe(gulp.dest('test-reports'));
 });
 
 gulp.task('protractor:html', 'Generates a HTML report from test-reports/cucumber.json', function() {
     var reporter = require('gulp-protractor-cucumber-html-report');
-    return gulp.src('test-reports/cucumber.json')
+    return gulp.src('test-reports/cucumber*.json')
         .pipe(reporter({
             dest: 'test-reports/'
         }));
