@@ -14,7 +14,7 @@
   "dependencies": {
     "add-stream": "^1.0.0",
     "browser-sync": "^2.7.5",
-    "cucumber-junit": "^1.6.0",
+    "cucumber-junit": "github:nalbion/cucumber-junit#feature/optional-testsuite-prefix",
     "del": "^1.1.1",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",
