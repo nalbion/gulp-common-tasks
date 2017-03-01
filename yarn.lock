@@ -1840,7 +1840,7 @@ ctype@0.5.3:
 
 "cucumber-junit@github:nalbion/cucumber-junit#feature/optional-testsuite-prefix":
   version "1.6.0"
-  resolved "https://codeload.github.com/nalbion/cucumber-junit/tar.gz/0f1eb1b7f5f122a5d5da1e5c9d1759e14a0e3917"
+  resolved "https://codeload.github.com/nalbion/cucumber-junit/tar.gz/42740ddfc11806e5718f5d0cb3c1a52cd4221c35"
   dependencies:
     xml "0.0.12"
     yargs "^5.0.0"
@@ -7355,10 +7355,6 @@ test-fixture@PolymerElements/test-fixture:
   resolved "https://codeload.github.com/PolymerElements/test-fixture/tar.gz/eb86ce25c850bb20523d47a55d07235f0fad5858"
   dependencies:
     web-component-tester "^6.0.0-prerelease.5"
-
-"test-fixture@github:polymerelements/test-fixture":
-  version "1.1.1"
-  resolved "https://codeload.github.com/polymerelements/test-fixture/tar.gz/18144479b7e364cef7936672b56b4512c7e8e1d0"
 
 test-value@^2.1.0:
   version "2.1.0"
