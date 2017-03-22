@@ -1838,9 +1838,9 @@ ctype@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/ctype/-/ctype-0.5.3.tgz#82c18c2461f74114ef16c135224ad0b9144ca12f"
 
-"cucumber-junit@github:nalbion/cucumber-junit#feature/optional-testsuite-prefix":
-  version "1.6.0"
-  resolved "https://codeload.github.com/nalbion/cucumber-junit/tar.gz/42740ddfc11806e5718f5d0cb3c1a52cd4221c35"
+cucumber-junit@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/cucumber-junit/-/cucumber-junit-1.7.0.tgz#518c217577319ca81916d4e406a993638db821b0"
   dependencies:
     xml "0.0.12"
     yargs "^5.0.0"
@@ -2795,12 +2795,13 @@ fs-extra@1.0.0, fs-extra@~1.0.0:
     jsonfile "^2.1.0"
     klaw "^1.0.0"
 
-fs-extra@^0.24.0:
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-0.24.0.tgz#d4e4342a96675cb7846633a6099249332b539952"
+fs-extra@^0.26.3:
+  version "0.26.7"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-0.26.7.tgz#9ae1fdd94897798edab76d0918cf42d0c3184fa9"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
+    klaw "^1.0.0"
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
 
@@ -3438,14 +3439,14 @@ gulp-mocha@^3.0.1:
     temp "^0.8.3"
     through "^2.3.4"
 
-gulp-protractor-cucumber-html-report@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/gulp-protractor-cucumber-html-report/-/gulp-protractor-cucumber-html-report-0.0.9.tgz#35228c2c41db5af17d638beca1776e5d5c560a1c"
+gulp-protractor-cucumber-html-report@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/gulp-protractor-cucumber-html-report/-/gulp-protractor-cucumber-html-report-0.1.2.tgz#54ae54e338ca9bbb8c1db31c4141bc4c1735527e"
   dependencies:
-    fs-extra "^0.24.0"
+    fs-extra "^0.26.3"
     gulp-util "^3.0.0"
     lodash.template "^3.6.2"
-    through2 "^0.6.1"
+    through2 "^2.0.0"
 
 gulp-rename@^1.2.0, gulp-rename@^1.2.2:
   version "1.2.2"
@@ -7270,7 +7271,7 @@ svgo@^0.6.0:
 
 "swagger-js-codegen@github:nalbion/swagger-js-codegen#feature/typescript-angular":
   version "1.6.9"
-  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/5e3728aededc4e9fd78d8ea5c3dd98d7e22ed615"
+  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/4292e4240549e179942716ebfc33c35766388021"
   dependencies:
     js-beautify "~1.5.1"
     jshint "~2.5.1"
