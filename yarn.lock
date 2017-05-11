@@ -7271,7 +7271,7 @@ svgo@^0.6.0:
 
 "swagger-js-codegen@github:nalbion/swagger-js-codegen#feature/typescript-angular":
   version "1.6.9"
-  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/4292e4240549e179942716ebfc33c35766388021"
+  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/ad66a98acbc9399d01b25cd4e049771aabe64768"
   dependencies:
     js-beautify "~1.5.1"
     jshint "~2.5.1"
