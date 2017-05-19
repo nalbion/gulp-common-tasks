@@ -6488,9 +6488,9 @@ svgo@^0.6.0:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/svgpath/-/svgpath-1.0.7.tgz#e554212b87e5d0469141a284c020c87f5c9a4ed0"
 
-"swagger-js-codegen@github:nalbion/swagger-js-codegen#v1.9.0-d":
-  version "1.9.0-d"
-  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/949a71a8eb09a015b209792593566e84f2c484e7"
+"swagger-js-codegen@github:nalbion/swagger-js-codegen#v1.9.0-e":
+  version "1.9.0-e"
+  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/b6ca79c97c7c470c97a1938f082b7832e3569eed"
   dependencies:
     js-beautify "^1.5.1"
     jshint "^2.5.1"
