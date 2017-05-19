@@ -61,11 +61,11 @@
     "require-dir": "^0.3.1",
     "requirejs": "^2.1.22",
     "run-sequence": "^1.2.2",
-    "swagger-js-codegen": "github:nalbion/swagger-js-codegen#v1.9.0-a",
+    "swagger-js-codegen": "github:nalbion/swagger-js-codegen#v1.9.0-c",
     "through2": "^2.0.1",
     "tslint": "^3.7.4",
     "typescript": "^2.1.4",
-    "web-component-tester": "^4.2.2",
+    "web-component-tester": "^5.0.1",
     "wiredep": "^4.0.0",
     "yamljs": "^0.2.8",
     "yargs": "^6.5.0"
