@@ -1,6 +1,6 @@
 {
   "name": "gulp-common-tasks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Common tasks pre-configured for Gulp",
   "repository": {
     "url": "https://github.com/nalbion/gulp-common-tasks.git"
