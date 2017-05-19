@@ -422,13 +422,13 @@ async@1.5.2, async@^1.2.1, async@^1.5.0, async@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@2.0.1:
+async@2.0.1, async@^2.0.0, async@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/async/-/async-2.0.1.tgz#b709cc0280a9c36f09f4536be823c838a9049e25"
   dependencies:
     lodash "^4.8.0"
 
-async@^2.0.0, async@^2.0.1, async@^2.1.2:
+async@^2.1.2:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/async/-/async-2.1.4.tgz#2d2160c7788032e4dd6cbe2502f1f9a2c8f6cde4"
   dependencies:
@@ -6488,9 +6488,9 @@ svgo@^0.6.0:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/svgpath/-/svgpath-1.0.7.tgz#e554212b87e5d0469141a284c020c87f5c9a4ed0"
 
-"swagger-js-codegen@github:nalbion/swagger-js-codegen#v1.9.0-c":
-  version "1.9.0-c"
-  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/88802b3a08cfe7b1b119e6fc8643c47502b51dc3"
+"swagger-js-codegen@github:nalbion/swagger-js-codegen#v1.9.0-d":
+  version "1.9.0-d"
+  resolved "https://codeload.github.com/nalbion/swagger-js-codegen/tar.gz/949a71a8eb09a015b209792593566e84f2c484e7"
   dependencies:
     js-beautify "^1.5.1"
     jshint "^2.5.1"
@@ -6550,9 +6550,9 @@ ternary-stream@^2.0.1:
     merge-stream "^1.0.0"
     through2 "^2.0.1"
 
-"test-fixture@github:polymerelements/test-fixture":
+test-fixture@PolymerElements/test-fixture:
   version "3.0.0-rc.1"
-  resolved "https://codeload.github.com/polymerelements/test-fixture/tar.gz/26118ef0467501c33c02316e7016a2837baba10f"
+  resolved "https://codeload.github.com/PolymerElements/test-fixture/tar.gz/26118ef0467501c33c02316e7016a2837baba10f"
 
 text-table@^0.2.0:
   version "0.2.0"
@@ -7509,13 +7509,13 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
-yauzl@2.4.1, yauzl@^2.2.1:
+yauzl@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/yauzl/-/yauzl-2.4.1.tgz#9528f442dab1b2284e58b4379bb194e22e0c4005"
   dependencies:
     fd-slicer "~1.0.1"
 
-yauzl@^2.5.0:
+yauzl@^2.2.1, yauzl@^2.5.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/yauzl/-/yauzl-2.7.0.tgz#e21d847868b496fc29eaec23ee87fdd33e9b2bce"
   dependencies:
