@@ -61,7 +61,7 @@
     "require-dir": "^0.3.1",
     "requirejs": "^2.1.22",
     "run-sequence": "^1.2.2",
-    "swagger-js-codegen": "github:nalbion/swagger-js-codegen#v1.9.0-f",
+    "swagger-js-codegen": "github:nalbion/swagger-js-codegen#v1.9.0-g",
     "through2": "^2.0.1",
     "tslint": "^3.7.4",
     "typescript": "^2.1.4",
